@@ -1,6 +1,6 @@
 {
   "name": "react-file-uploadify",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple reactjs drag and drop files library to use . Users can drag and drop or even select the file.",
   "author": "temaweb10",
   "license": "MIT",

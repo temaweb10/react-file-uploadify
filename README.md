@@ -4,11 +4,15 @@
 
 [![NPM](https://img.shields.io/npm/v/react-file-uploadify.svg)](https://www.npmjs.com/package/react-file-uploadify) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+#
+![alt-text](https://github.com/temaweb10/media/blob/main/demo.gif?raw=true)
+
 ## Install
 
 ```bash
 npm install --save react-file-uploadify
 ```
+
 
 ## Usage
 
