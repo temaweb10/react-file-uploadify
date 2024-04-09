@@ -1,0 +1,34 @@
+.files-list{
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 100%;
+}
+
+.file-box{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 6px;
+  width: 250px;
+  margin-bottom: 4px;
+}
+
+.file-box__file-button{
+  color: #1590f6;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  transition: 0.2s;
+  margin-top: 4px;
+  text-decoration: underline;
+  background-color: rgba(0,0,0,0);
+  cursor: pointer;
+}
+
+.file-box__file-button:hover{
+  color: #0072d2;
+}
