@@ -9,9 +9,8 @@ const App = () => {
     console.log(incommingFiles)
     setFiles(incommingFiles);
   };
-  return <div style={{width:"600px",height:"300px",margin:"12px"}}>
-    <FileDropZone onChange={updateFiles}  acceptTypes={".jpg, .jpeg, .png"}  multiple={true} minFiles={2}
-    />
+  return <div style={{width:"600px",height:"300px",margin:"92px"}}>
+    <FileDropZone onChange={updateFiles}  acceptTypes={[".pdf",".docx"]}  multiple={true} minFiles={2}/>
   </div>
 
 }

@@ -20,8 +20,9 @@
 }
 
 .file-drop-zone_errors span{
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
   color: #eb4663 ;
 }
 

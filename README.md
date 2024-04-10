@@ -26,10 +26,12 @@ const App = () => {
   const [files,setFiles] = useState([])
 
   const updateFiles = (incommingFiles) => {
+    console.log(incommingFiles)
     setFiles(incommingFiles);
   };
-  return <FileDropZone onChange={updateFiles} maxFiles={5} maxFileSizeInBytes={455500} multiple={true} acceptTypes={".jpg, .jpeg, .png"}
-  />
+  return <div style={{width:"600px",height:"300px"}}>
+    <FileDropZone onChange={updateFiles}  acceptTypes={[".pdf",".docx"]}  multiple={true} minFiles={2}/>
+  </div>
 
 }
 
