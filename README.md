@@ -38,13 +38,13 @@ const App = () => {
 export default App
 ```
 ## Properties
-| Prop       | Default   | Type    | Description                  |
-|------------|-----------|---------|------------------------------|
-| multiple      | false     | Boolean |    The ability to select multiple files                          |
-| acceptTypes      | undefined | String  |   File types that can be selected                           |
-| maxFiles      | undefined | Number  |     Maximum number of accepted files                         |
-| maxFilesSizeInBytes      |     undefined      |  Number       |              The maximum number of bytes of all selected files                |
-| onChange      |      undefined     |   ChangeEventHandler      |                              |
+| Prop       | Default   | Type               | Description                  |
+|------------|-----------|--------------------|------------------------------|
+| multiple      | false     | Boolean            |    The ability to select multiple files                          |
+| acceptTypes      | undefined | Array              |   File types that can be selected                           |
+| maxFiles      | undefined | Number             |     Maximum number of accepted files                         |
+| maxFilesSizeInBytes      |     undefined      | Number             |              The maximum number of bytes of all selected files                |
+| onChange      |      undefined     | ChangeEventHandler |                              |
 
 
 ## License
