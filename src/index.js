@@ -1,16 +1,27 @@
 import React,{useState,useRef,useEffect} from 'react'
 import fileDropZoneStyles from './fileDropZone.module.css'
 import filesListStyles from './filesList.module.css'
+import { FaRegFileImage,FaRegFileVideo,FaRegFile  ,FaRegFilePowerpoint  } from "react-icons/fa";
+import { CgFileDocument } from "react-icons/cg"
+import { BsFileEarmarkMusic } from "react-icons/bs";
+import { IoClose } from "react-icons/io5";
+import {langRu,langEn} from './lang'
 
-export const FileDropZone = ({multiple , acceptTypes , maxFiles,minFiles,maxFilesSizeInBytes ,onChange }) => {
+export const FileDropZone = ({multiple , acceptTypes , maxFiles,minFiles,maxFilesSizeInBytes ,maxFilesSizeInMb,onChange ,haveFileList , classNames,lang}) => {
   const [isHovered,setIsHovered ] = useState(false)
   const [isNeedValidationFiles,setIsNeedValidationFiles] = useState(true)
   const [errorMessages ,setErrorMessages  ] = useState([])
   const [files,setFiles] = useState([])
   const fileInputRef = useRef()
+  const langDefined = lang === undefined ? langEn : lang === "en" ? langEn : langRu
+  const isHaveFileList = haveFileList === undefined ? true : haveFileList
+
 
   const filesValidation = (eventFiles) =>{
     const eventFilesArray = Array.from(eventFiles);
+    const filesSizeInBytes = eventFilesArray.reduce((accumulator, file) => accumulator + file.size, 0);
+    const bytesInMegabyte = 1024 * 1024;
+    const totalMegabytes = filesSizeInBytes / bytesInMegabyte;
 
     if(acceptTypes !== undefined){
        for (let i = 0; i < eventFilesArray.length; i++) {
@@ -18,28 +29,38 @@ export const FileDropZone = ({multiple , acceptTypes , maxFiles,minFiles,maxFile
          const isValidExtension = acceptTypes.includes(extension);
 
          if (!isValidExtension) {
-           setErrorMessages(prevMessages => [...prevMessages, "Invalid file extension for file"])
+           setErrorMessages(prevMessages => [...prevMessages,langDefined.invalidExtension])
            break;
          }
        }
      }
+
+
+    if(maxFilesSizeInMb !== undefined && maxFilesSizeInBytes === undefined){
+      if (totalMegabytes > maxFilesSizeInMb) {
+        setErrorMessages(prevMessages => [
+          ...prevMessages,
+          `${langDefined.maxFilesSizeBytesError} ${maxFilesSizeInMb}mb`
+        ]);
+      }
+
+    } else if (maxFilesSizeInMb === undefined && maxFilesSizeInBytes !== undefined){
+      if (filesSizeInBytes > maxFilesSizeInBytes) {
+        setErrorMessages(prevMessages => [
+          ...prevMessages,
+          `${langDefined.maxFilesSizeMbError} ${maxFilesSizeInBytes} bytes`
+        ]);
+      }
+    }
+
+
     setIsNeedValidationFiles((actualState)=>{
       if(actualState){
-        const filesSizeInBytes = eventFilesArray.reduce(function (a, b) {
-          return Number(a.size) + Number(b.size);
-        });
-
         if (minFiles !== undefined && eventFilesArray.length < minFiles) {
-          setErrorMessages(prevMessages => [...prevMessages, "Minimum number of files " + minFiles]);
+          setErrorMessages(prevMessages => [...prevMessages, langDefined.minFilesError + minFiles]);
         }
         if (maxFiles !== undefined && eventFilesArray.length > maxFiles) {
-          setErrorMessages(prevMessages => [...prevMessages, "Maximum number of files " + maxFiles]);
-        }
-        if (maxFilesSizeInBytes !== undefined && filesSizeInBytes > maxFilesSizeInBytes) {
-          setErrorMessages(prevMessages => [
-            ...prevMessages,
-            "The total number of files should not exceed " + (maxFilesSizeInBytes / (1024 * 1024)).toFixed(2) + "mb"
-          ]);
+          setErrorMessages(prevMessages => [...prevMessages, langDefined.maxFilesError + maxFiles]);
         }
 
         setErrorMessages(prevMessages => {
@@ -66,6 +87,14 @@ export const FileDropZone = ({multiple , acceptTypes , maxFiles,minFiles,maxFile
     onChange(files)
   },[files])
 
+  useEffect(() => {
+    if(files.length !== 0){
+
+      setIsNeedValidationFiles(false)
+    } else if (files.length === 0){
+      setIsNeedValidationFiles(true)
+    }
+  }, [isNeedValidationFiles])
 
   const handleDrop = (event)=> {
     event.preventDefault();
@@ -78,7 +107,7 @@ export const FileDropZone = ({multiple , acceptTypes , maxFiles,minFiles,maxFile
   };
 
   return <div
-    className={fileDropZoneStyles["file-drop-zone_box"]}
+    className={[fileDropZoneStyles["file-drop-zone_box"],classNames["file-drop-zone_box"]].join(" ")}
     onDragEnter={(event)=> {
       event.preventDefault();
       setIsHovered(true);
@@ -98,32 +127,70 @@ export const FileDropZone = ({multiple , acceptTypes , maxFiles,minFiles,maxFile
 
     {errorMessages.length !== 0 ? <div className={fileDropZoneStyles['file-drop-zone_errors']}>
       {errorMessages.map((errorMsg) => <span key={errorMsg}>{errorMsg}</span>)}
-      <button className={fileDropZoneStyles['file-drop-zone_button']} onClick={() => {
+      <button className={[classNames['file-drop-zone_button'],fileDropZoneStyles['file-drop-zone_button']].join(" ")} onClick={() => {
         setErrorMessages([])
-      }}>Close
+      }}>{langDefined.close}
       </button>
-    </div> : files.length !== 0
-      ? <div className={filesListStyles["files-list_parent"]}>
-        <FilesList files={files} setFiles={setFiles}/>
-        <button className={fileDropZoneStyles['file-drop-zone_button']} onClick={()=>{
+    </div> : (files.length !== 0 && isHaveFileList === true)
+      ?  <div className={filesListStyles["files-list_parent"]}>
+        <FilesList files={files} setFiles={setFiles} classNames={classNames} a={1}/>
+        <button className={[classNames['file-drop-zone_button'],fileDropZoneStyles['file-drop-zone_button']].join(" ")} onClick={()=>{
           setIsNeedValidationFiles(false)
           fileInputRef.current.click()
-        }}>Add more files</button>
+        }}>{langDefined.addMoreFiles}</button>
       </div>
       : <div className={fileDropZoneStyles['file-drop-zone__upload-box']}>
-          <button className={fileDropZoneStyles['file-drop-zone_button']} onClick={() => fileInputRef.current.click()}>Select file</button>
-          <span>or drag and drop files</span>
+          <button className={[classNames['file-drop-zone_button'],fileDropZoneStyles['file-drop-zone_button']].join(" ")} onClick={() => fileInputRef.current.click()}>{langDefined.selectFile}</button>
+          <span>{langDefined.orDragAndDropFiles}</span>
         </div>
     }
   </div>
 }
 
-export const FilesList = (files) => {
+
+
+export const FilesList = (files,classNames) => {
+  const getIconFile = (fileName)=>{
+    const extension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase()
+    const iconClasses = [filesListStyles["file-icon"],classNames["file-icon"]].join(" ")
+
+    if(extension === ".docx" || extension === ".pdf" || extension === ".txt" || extension === ".rtf" || extension === ".doc") {
+      return <CgFileDocument  className={iconClasses} size={"2em"}/>
+    }
+    if(extension === ".png" || extension === ".jpg" || extension === ".jpeg" || extension === ".webm" || extension === ".bmp" || extension === ".jpg"){
+      return <FaRegFileImage className={iconClasses} size={"2em"}/>
+    }
+    if(extension === ".mp4" || extension === ".avi" || extension === ".mov" || extension === ".mkv"){
+      return <FaRegFileVideo className={iconClasses} size={"2em"}/>
+    }
+    if(extension === ".mp3" || extension === ".wav" || extension === ".ogg" || extension === ".wma") {
+      return <BsFileEarmarkMusic className={iconClasses} size={"2em"}/>
+    }
+    if(extension === ".ppt" || extension === ".pptx"){
+      return <FaRegFilePowerpoint className={iconClasses} size={"2em"}/>
+    }
+
+    return <FaRegFile className={iconClasses} size={"2em"}/>
+  }
+  function trimFileName(fileName, maxLength) {
+    console.log()
+    if (fileName.split(".")[0].length > maxLength) {
+      console.log(1)
+      return fileName.split(".")[0].slice(0, maxLength - 3) + "..." +fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+    } else {
+      return fileName;
+    }
+  }
+
   return <div className={filesListStyles['files-list']}>
-    {Array.from(files.files).map((file,index) => <div key={file + "" + index} className={filesListStyles['file-box']}>
-      <span className={filesListStyles["file-box__file-name"]}>{file.name}</span>
-        <button className={filesListStyles["file-box__file-button"]} onClick={()=>files.setFiles(files.files.filter((el,indexFilter)=> index !== indexFilter))}>remove</button>
-    </div>)}
+    {Array.from(files.files).map((file,index) => {
+      console.log(getIconFile(file.name))
+      return <div key={file + "" + index} className={[filesListStyles['file-box'],classNames["file-box"]].join(" ")}>
+        {getIconFile(file.name)}
+        <span className={[filesListStyles["file-box__file-name"],classNames["file-box__file-name"]].join(" ")}>{`${trimFileName(file.name,16)}`}</span>
+        <button className={[filesListStyles["file-box__file-button"],classNames["file-box__file-button"]].join(" ")} onClick={() => files.setFiles(files.files.filter((el, indexFilter) => index !== indexFilter))}><IoClose/></button>
+      </div>
+    })}
   </div>
 }
 
