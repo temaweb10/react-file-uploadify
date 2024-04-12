@@ -17,14 +17,7 @@ const App = () => {
       minFiles={2}
       maxFiles={5}
       lang={"en"}
-      classNames={
-      {"file-drop-zone_box":indexStyles.myFileDropZoneBoxClass,
-        "file-drop-zone_button":indexStyles.myButtonClass,
-        "file-icon":indexStyles.myFileIconClass,
-        "file-box":indexStyles.myFileBoxClass,
-        "file-box__file-button":indexStyles.myFileButton
-      }
-    }
+
     />
   </div>
 

@@ -99,8 +99,9 @@ export const FileDropZone = ({ multiple, acceptTypes, maxFiles, minFiles, maxFil
     filesValidation(eventFiles);
   };
 
-  const fileDropZoneClasses = classNames["file-drop-zone_box"] ? [fileDropZoneStyles["file-drop-zone_box"], classNames["file-drop-zone_box"]].join(" ") : fileDropZoneStyles["file-drop-zone_box"];
-  const buttonClasses = classNames['file-drop-zone_button'] ? [classNames['file-drop-zone_button'], fileDropZoneStyles['file-drop-zone_button']].join(" ") : fileDropZoneStyles['file-drop-zone_button'];
+  const fileDropZoneClasses =  classNames && classNames["file-drop-zone_box"]  ? [fileDropZoneStyles["file-drop-zone_box"], classNames["file-drop-zone_box"]].join(" ") : fileDropZoneStyles["file-drop-zone_box"];
+  console.log(fileDropZoneClasses)
+  const buttonClasses = classNames && classNames['file-drop-zone_button'] ? [classNames['file-drop-zone_button'], fileDropZoneStyles['file-drop-zone_button']].join(" ") : fileDropZoneStyles['file-drop-zone_button'];
 
   return (
     <div
@@ -144,7 +145,7 @@ export const FileDropZone = ({ multiple, acceptTypes, maxFiles, minFiles, maxFil
 export const FilesList = (files,classNames) => {
   const getIconFile = (fileName)=>{
     const extension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase()
-    const iconClasses = classNames["file-icon"] ? [filesListStyles["file-icon"],classNames["file-icon"]].join(" ") : filesListStyles["file-icon"]
+    const iconClasses = classNames && classNames["file-icon"] ? [filesListStyles["file-icon"],classNames["file-icon"]].join(" ") : filesListStyles["file-icon"]
 
     if(extension === ".docx" || extension === ".pdf" || extension === ".txt" || extension === ".rtf" || extension === ".doc") {
       return <CgFileDocument  className={iconClasses} size={"2em"}/>
@@ -177,10 +178,10 @@ export const FilesList = (files,classNames) => {
   return <div className={filesListStyles['files-list']}>
     {Array.from(files.files).map((file,index) => {
       console.log(getIconFile(file.name))
-      return <div key={file + "" + index} className={classNames["file-box"] ? [filesListStyles['file-box'],classNames["file-box"]].join(" ") : filesListStyles['file-box']}>
+      return <div key={file + "" + index} className={ classNames && classNames["file-box"] ? [filesListStyles['file-box'],classNames["file-box"]].join(" ") : filesListStyles['file-box']}>
         {getIconFile(file.name)}
-        <span className={classNames["file-box__file-name"] ? [filesListStyles["file-box__file-name"],classNames["file-box__file-name"]].join(" ") : filesListStyles["file-box__file-name"]}>{`${trimFileName(file.name,16)}`}</span>
-        <button className={classNames["file-box__file-button"] ? [filesListStyles["file-box__file-button"],classNames["file-box__file-button"]].join(" "):filesListStyles["file-box__file-button"]} onClick={() => files.setFiles(files.files.filter((el, indexFilter) => index !== indexFilter))}><IoClose/></button>
+        <span className={classNames && classNames["file-box__file-name"] ? [filesListStyles["file-box__file-name"],classNames["file-box__file-name"]].join(" ") : filesListStyles["file-box__file-name"]}>{`${trimFileName(file.name,16)}`}</span>
+        <button className={classNames && classNames["file-box__file-button"] ? [filesListStyles["file-box__file-button"],classNames["file-box__file-button"]].join(" "):filesListStyles["file-box__file-button"]} onClick={() => files.setFiles(files.files.filter((el, indexFilter) => index !== indexFilter))}><IoClose/></button>
       </div>
     })}
   </div>
