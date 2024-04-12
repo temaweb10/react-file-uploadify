@@ -53,18 +53,20 @@ export default App
 
 ```
 ## Properties
-| Prop       | Default   | Type               | Description                                                                                                                                                                                                   |
-|------------|-----------|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `multiple`      | false     | Boolean            | The ability to select `multiple` files                                                                                                                                                                        |
-| `acceptTypes`      | undefined | Array              | File `types` that can be selected                                                                                                                                                                             |
-| `maxFiles`      | undefined | Number             | `Maximum` number of accepted files                                                                                                                                                                            |
-| `maxFilesSizeInMb`      | undefined | Number             | The `maximum` number of mb of all selected files                                                                                                                                                              |
-| `maxFilesSizeInBytes`      | undefined | Number             | The `maximum` number of bytes of all selected files                                                                                                                                                           |
-| `haveFileList`      | true      | Boolean            | Show a list of selected files                                                                                                                                                                                 |
-| `classNames`      | undefined | Object             | {<br/>"file-drop-zone_box":"myBoxClass",<br/> "file-drop-zone_button":"myButtonClass",<br/> "file-icon":"myFileIconClass",<br/> "file-box":"myFileBoxClass",<br/>"file-box__file-button":"myFileButton"<br/>}
-                                              |
-| `lang`      | en        | String             | The interface language is `en` and `ru`                                                                                                                                                                       |
-| `onChange`      | undefined | ChangeEventHandler | The selected files are in the function argument                                                                                                                                                               |
+
+
+| Prop                   | Default   | Type               | Description                                                                                                                                 |
+|------------------------|-----------|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| `multiple`             | false     | Boolean            | The ability to select `multiple` files                                                                                                      |
+| `acceptTypes`          | undefined | Array              | File `types` that can be selected                                                                                                           |
+| `maxFiles`             | undefined | Number             | `Maximum` number of accepted files                                                                                                          |
+| `maxFilesSizeInMb`     | undefined | Number             | The `maximum` number of mb of all selected files                                                                                            |
+| `maxFilesSizeInBytes`  | undefined | Number             | The `maximum` number of bytes of all selected files                                                                                         |
+| `haveFileList`         | true      | Boolean            | Show a list of selected files                                                                                                               |
+| `classNames`      | undefined | Object             |all classes <br/> {<br/>"file-drop-zone_box":"myBoxClass",<br/> "file-drop-zone_button":"myButtonClass",<br/> "file-icon":"myFileIconClass",<br/> "file-box":"myFileBoxClass",<br/>"file-box__file-button":"myFileButton"<br/>}
+| `lang`                 | en        | String             | The interface language is `en` and `ru`                                                                                                     |
+| `onChange`             | undefined | ChangeEventHandler | The selected files are in the function argument                                                                                             |
+
 
 
 ## License
