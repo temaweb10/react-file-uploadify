@@ -55,3 +55,10 @@
   margin-bottom: 5px;
   cursor: pointer;
 }
+
+.file-drop-zone__text{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #111;
+}

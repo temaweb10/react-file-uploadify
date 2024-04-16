@@ -99,9 +99,8 @@ export const FileDropZone = ({ multiple, acceptTypes, maxFiles, minFiles, maxFil
     filesValidation(eventFiles);
   };
 
-  const fileDropZoneClasses =  classNames && classNames["file-drop-zone_box"]  ? [fileDropZoneStyles["file-drop-zone_box"], classNames["file-drop-zone_box"]].join(" ") : fileDropZoneStyles["file-drop-zone_box"];
-  console.log(fileDropZoneClasses)
-  const buttonClasses = classNames && classNames['file-drop-zone_button'] ? [classNames['file-drop-zone_button'], fileDropZoneStyles['file-drop-zone_button']].join(" ") : fileDropZoneStyles['file-drop-zone_button'];
+  const fileDropZoneClasses =  classNames && classNames.dropZoneBox  ? [fileDropZoneStyles["file-drop-zone_box"], classNames.dropZoneBox].join(" ") : fileDropZoneStyles["file-drop-zone_box"];
+  const buttonClasses = classNames && classNames.button ? [classNames.button, fileDropZoneStyles['file-drop-zone_button']].join(" ") : fileDropZoneStyles['file-drop-zone_button'];
 
   return (
     <div
@@ -134,7 +133,7 @@ export const FileDropZone = ({ multiple, acceptTypes, maxFiles, minFiles, maxFil
       ) : (
         <div className={fileDropZoneStyles['file-drop-zone__upload-box']}>
           <button className={buttonClasses} onClick={() => fileInputRef.current.click()}>{langDefined.selectFile}</button>
-          <span>{langDefined.orDragAndDropFiles}</span>
+          <span className={fileDropZoneStyles['file-drop-zone__text']}>{langDefined.orDragAndDropFiles}</span>
         </div>
       )}
     </div>
@@ -143,48 +142,43 @@ export const FileDropZone = ({ multiple, acceptTypes, maxFiles, minFiles, maxFil
 
 
 export const FilesList = (files,classNames) => {
-  const getIconFile = (fileName)=>{
-    const extension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase()
-    const iconClasses = classNames && classNames["file-icon"] ? [filesListStyles["file-icon"],classNames["file-icon"]].join(" ") : filesListStyles["file-icon"]
-
-    if(extension === ".docx" || extension === ".pdf" || extension === ".txt" || extension === ".rtf" || extension === ".doc") {
-      return <CgFileDocument  className={iconClasses} size={"2em"}/>
-    }
-    if(extension === ".png" || extension === ".jpg" || extension === ".jpeg" || extension === ".webm" || extension === ".bmp" || extension === ".jpg"){
-      return <FaRegFileImage className={iconClasses} size={"2em"}/>
-    }
-    if(extension === ".mp4" || extension === ".avi" || extension === ".mov" || extension === ".mkv"){
-      return <FaRegFileVideo className={iconClasses} size={"2em"}/>
-    }
-    if(extension === ".mp3" || extension === ".wav" || extension === ".ogg" || extension === ".wma") {
-      return <BsFileEarmarkMusic className={iconClasses} size={"2em"}/>
-    }
-    if(extension === ".ppt" || extension === ".pptx"){
-      return <FaRegFilePowerpoint className={iconClasses} size={"2em"}/>
-    }
-
-    return <FaRegFile className={iconClasses} size={"2em"}/>
-  }
-  function trimFileName(fileName, maxLength) {
-    console.log()
-    if (fileName.split(".")[0].length > maxLength) {
-      console.log(1)
-      return fileName.split(".")[0].slice(0, maxLength - 3) + "..." +fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
-    } else {
-      return fileName;
-    }
-  }
-
   return <div className={filesListStyles['files-list']}>
     {Array.from(files.files).map((file,index) => {
-      console.log(getIconFile(file.name))
-      return <div key={file + "" + index} className={ classNames && classNames["file-box"] ? [filesListStyles['file-box'],classNames["file-box"]].join(" ") : filesListStyles['file-box']}>
-        {getIconFile(file.name)}
-        <span className={classNames && classNames["file-box__file-name"] ? [filesListStyles["file-box__file-name"],classNames["file-box__file-name"]].join(" ") : filesListStyles["file-box__file-name"]}>{`${trimFileName(file.name,16)}`}</span>
-        <button className={classNames && classNames["file-box__file-button"] ? [filesListStyles["file-box__file-button"],classNames["file-box__file-button"]].join(" "):filesListStyles["file-box__file-button"]} onClick={() => files.setFiles(files.files.filter((el, indexFilter) => index !== indexFilter))}><IoClose/></button>
+      return <div key={file + "" + index} className={ classNames && classNames.fileBox ? [filesListStyles['file-box'],classNames.fileBox].join(" ") : filesListStyles['file-box']}>
+        {getIconFile(file.name,classNames && classNames.fileIcon ? [filesListStyles["file-icon"],classNames.fileIcon].join(" ") : filesListStyles["file-icon"])}
+        <span className={classNames && classNames.fileName ? [filesListStyles["file-box__file-name"],classNames.fileName].join(" ") : filesListStyles["file-box__file-name"]}>{`${trimFileName(file.name,16)}`}</span>
+        <button className={classNames && classNames.fileBoxButton ? [filesListStyles["file-box__file-button"],classNames.fileBoxButton].join(" "):filesListStyles["file-box__file-button"]} onClick={() => files.setFiles(files.files.filter((el, indexFilter) => index !== indexFilter))}><IoClose/></button>
       </div>
     })}
   </div>
+}
+
+const getIconFile = (fileName,iconClasses)=>{
+  const extension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase()
+  if(extension === ".docx" || extension === ".pdf" || extension === ".txt" || extension === ".rtf" || extension === ".doc") {
+    return <CgFileDocument  className={iconClasses} size={"2em"}/>
+  }
+  if(extension === ".png" || extension === ".jpg" || extension === ".jpeg" || extension === ".webm" || extension === ".bmp" || extension === ".jpg"){
+    return <FaRegFileImage className={iconClasses} size={"2em"}/>
+  }
+  if(extension === ".mp4" || extension === ".avi" || extension === ".mov" || extension === ".mkv"){
+    return <FaRegFileVideo className={iconClasses} size={"2em"}/>
+  }
+  if(extension === ".mp3" || extension === ".wav" || extension === ".ogg" || extension === ".wma") {
+    return <BsFileEarmarkMusic className={iconClasses} size={"2em"}/>
+  }
+  if(extension === ".ppt" || extension === ".pptx"){
+    return <FaRegFilePowerpoint className={iconClasses} size={"2em"}/>
+  }
+
+  return <FaRegFile className={iconClasses} size={"2em"}/>
+}
+function trimFileName(fileName, maxLength) {
+  if (fileName.split(".")[0].length > maxLength) {
+    return fileName.split(".")[0].slice(0, maxLength - 3) + "..." +fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+  } else {
+    return fileName;
+  }
 }
 
 

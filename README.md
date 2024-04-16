@@ -36,14 +36,13 @@ const App = () => {
       minFiles={2}
       maxFiles={5}
       lang={"en"}
-      classNames={
-        {"file-drop-zone_box":myClassNames.myFileDropZoneBoxClass,
-          "file-drop-zone_button":myClassNames.myButtonClass,
-          "file-icon":myClassNames.myFileIconClass,
-          "file-box":myClassNames.myFileBoxClass,
-          "file-box__file-button":myClassNames.myFileButton
-        }
-      }
+      classNames={{
+        fileIcon: myClassNames.myFileIconClass,
+        fileBox: myClassNames.myFileBoxClass,
+        fileBoxButton: myClassNames.myFileButton,
+        dropZoneBox: myClassNames.myFileDropZoneBoxClass,
+        button: myClassNames.myButtonClass,
+      }}
     />
   </div>
 
@@ -63,7 +62,7 @@ export default App
 | `maxFilesSizeInMb`     | undefined | Number             | The `maximum` number of mb of all selected files                                                                                            |
 | `maxFilesSizeInBytes`  | undefined | Number             | The `maximum` number of bytes of all selected files                                                                                         |
 | `haveFileList`         | true      | Boolean            | Show a list of selected files                                                                                                               |
-| `classNames`      | undefined | Object             |all classes <br/> {<br/>"file-drop-zone_box":"myBoxClass",<br/> "file-drop-zone_button":"myButtonClass",<br/> "file-icon":"myFileIconClass",<br/> "file-box":"myFileBoxClass",<br/>"file-box__file-button":"myFileButton"<br/>}
+| `classNames`      | undefined | Object             |all classes <br/> {<br/>dropZoneBox: myClassNames.myFileDropZoneBoxClass,<br/> button: myClassNames.myButtonClass,<br/> fileIcon: myClassNames.myFileIconClass,<br/> fileBox: myClassNames.myFileBoxClass,<br/>fileBoxButton: myClassNames.myFileButton,<br/>fileName: myClassNames.myFileName<br/>}
 | `lang`                 | en        | String             | The interface language is `en` and `ru`                                                                                                     |
 | `onChange`             | undefined | ChangeEventHandler | The selected files are in the function argument                                                                                             |
 
